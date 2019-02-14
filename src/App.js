@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
 const App = props => {
-  const [state, setState] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    document.title = `Counter: ${count}`;
+  });
+
   return (
     <div className="App">
       <header className="App-header">
@@ -20,10 +25,17 @@ const App = props => {
           Learn React
         </a>
 
-        <h1>{state}</h1>
+        <h1>{count}</h1>
 
-        <button onClick={() => {setState(state + 1)}}>Increment Counter</button>
+        <button
+          onClick={() => {
+            setCount(count + 1);
+          }}
+        >
+          Increment Counter
+        </button>
 
+        <div>{count % 10 === 0 ? "Counter is divisible by 10" : null}</div>
       </header>
     </div>
   );
