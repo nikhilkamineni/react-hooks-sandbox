@@ -5,8 +5,15 @@ import "./App.css";
 const App = props => {
   const [count, setCount] = useState(0);
 
+  const [countMilestone, setCountMilestone] = useState(false);
+
   useEffect(() => {
     document.title = `Counter: ${count}`;
+  });
+
+  useEffect(() => {
+    if (count % 10 === 0) setCountMilestone(true);
+    else setCountMilestone(false);
   });
 
   return (
@@ -35,7 +42,7 @@ const App = props => {
           Increment Counter
         </button>
 
-        <div>{count % 10 === 0 ? "Counter is divisible by 10" : null}</div>
+        <div>{countMilestone ? "We hit a milestone!" : "Keep going..."}</div>
       </header>
     </div>
   );
