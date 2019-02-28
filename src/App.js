@@ -4,31 +4,34 @@ import "./App.css";
 
 const TOP_STORIES_URL = "https://hacker-news.firebaseio.com/v0/topstories.json";
 
-const App = props => {
-  const [count, setCount] = useState(0);
-
-  const [milestone, setmilestone] = useState(false);
+const App = () => {
+  // Fetch Top Stories logic
   const [topStories, setTopStories] = useState([]);
-
   useEffect(() => {
-    document.title = `Counter: ${count}`;
-  });
+    fetchTopStories();
+  }, []);
 
-  useEffect(() => {
-    if (count % 10 === 0 && count !== 0) setmilestone(true);
-    else setmilestone(false);
-  });
-
-  const fetchTopStories = async () => {
+  async function fetchTopStories() {
     const response = await axios.get(TOP_STORIES_URL);
     const allStories = Object.values(response.data);
     setTopStories(allStories.slice(0, 10));
   };
 
-  useEffect(() => {
-    fetchTopStories();
-  }, []);
 
+  // Counter logic
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    document.title = `Counter: ${count}`;
+  });
+
+  const [milestone, setmilestone] = useState(false);
+  useEffect(() => {
+    if (count % 10 === 0 && count !== 0) setmilestone(true);
+    else setmilestone(false);
+  });
+
+
+  // Return JSX
   return (
     <div className="App">
       <header className="App-header">
@@ -45,7 +48,7 @@ const App = props => {
         <div>{milestone ? "We hit a milestone!" : "Keep going..."}</div>
 
         <ul>
-          <h2>Top Stories</h2>
+          <h2>Top Stories ID's</h2>
           {topStories.map(item => (
             <li key={item}>{item}</li>
           ))}
